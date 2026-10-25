@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nova Mart – Staff Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+  <header class="topbar">
+    <div class="brand">Nova<span>Mart</span> Staff Dashboard</div>
+    <nav><a href="index.html">Home</a><a href="call.html">Call</a><a href="staff.html" aria-current="page">Staff view</a></nav>
+  </header>
+
+  <main class="shell wide">
+    <section class="stats" aria-label="Summary">
+      <div class="card stat"><b id="s-total">0</b><span>Calls</span></div>
+      <div class="card stat"><b id="s-resolved">0</b><span>Resolved</span></div>
+      <div class="card stat"><b id="s-escalated">0</b><span>Escalated</span></div>
+      <div class="card stat"><b id="s-pending">0</b><span>Need follow-up</span></div>
+    </section>
+
+    <section class="split2" aria-label="Call analytics">
+      <div class="card chart"><h2>Calls by intent</h2><div class="bars" id="c-intent"></div></div>
+      <div class="card chart"><h2>Outcomes</h2><div class="bars" id="c-outcome"></div></div>
+    </section>
+
+    <section class="card evalpanel" aria-label="Evaluation results">
+      <div class="evhead"><h2>Evaluation results</h2><span class="pill" id="ev-tag"></span></div>
+      <div class="evtiles" id="ev-tiles"></div>
+      <h3>Confusion matrix <span class="hint">(rows: actual intent, columns: predicted)</span></h3>
+      <div class="scrollx"><table class="matrix" id="ev-matrix"></table></div>
+    </section>
+
+    <section class="card filters" aria-label="Filters">
+      <label>Intent
+        <select id="f-intent">
+          <option value="">All</option><option>order_status</option><option>business_hours</option>
+          <option>human_agent</option><option>return_policy</option><option>shipping_info</option><option>unknown</option>
+        </select>
+      </label>
+      <label>Outcome
+        <select id="f-outcome">
+          <option value="">All</option><option>resolved</option><option>escalated</option><option>abandoned</option><option>error</option>
+        </select>
+      </label>
+      <label>Follow-up
+        <select id="f-follow">
+          <option value="">All</option><option value="none">none</option><option value="callback needed">callback needed</option><option value="human review">human review</option>
+        </select>
+      </label>
+      <button class="btn" id="refresh">Refresh</button>
+    </section>
+
+    <div class="split">
+      <section class="card" aria-label="Call list">
+        <table>
+          <thead><tr><th>Started</th><th>Intent</th><th>Outcome</th><th>Follow-up</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p class="hint" id="none" style="padding:16px" hidden>No calls match these filters yet. Make a call on the Call page first.</p>
+      </section>
+
+      <section class="card detail" id="detail" aria-label="Call detail" aria-live="polite">
+        <p class="hint">Select a call to see its transcript, summary and escalation reason.</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="api.js"></script>
+  <script src="staff.js"></script>
+</body>
+</html>
