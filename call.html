@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nova Mart – Call Assistant</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">Nova<span>Mart</span> Support</div>
+    <nav><a href="index.html">Home</a><a href="call.html" aria-current="page">Call</a><a href="staff.html">Staff view</a></nav>
+  </header>
+
+  <!-- consent + mode selection, shown before any session starts -->
+  <div class="overlay" id="consent" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+    <div class="card dialog">
+      <h1 id="consent-title">Before we start</h1>
+      <p>You are about to talk to Nova Mart's <b>automated assistant</b>, not a person.</p>
+      <ul>
+        <li>This conversation is recorded as text and saved for staff review.</li>
+        <li>Please don't say card numbers or passwords. They are never needed.</li>
+        <li>The assistant can't promise refunds or exceptions. A human will follow up on those.</li>
+      </ul>
+      <div class="mode-pick">
+        <button class="btn primary" id="start-voice">Start with voice</button>
+        <button class="btn" id="start-text">Start with text</button>
+      </div>
+      <a class="btn dash-link" id="dash-link" href="staff.html">📊 Just looking? Go to the dashboard</a>
+      <p class="hint" id="voice-support" hidden>Voice isn't supported in this browser. Text mode is available (Chrome works best for voice).</p>
+    </div>
+  </div>
+
+  <main class="shell">
+    <div class="banner" id="banner" hidden role="status"></div>
+
+    <section class="card" aria-label="Call">
+      <div class="callbar">
+        <span class="status"><span class="dot" id="dot"></span><span id="status-text">Not connected</span></span>
+        <span class="timer" id="timer">00:00</span>
+        <span class="pill" id="mode-pill" hidden></span>
+        <span class="spacer"></span>
+        <button class="btn" id="mute" aria-pressed="false" disabled>Mute voice</button>
+        <button class="btn" id="replay" disabled>Replay</button>
+        <button class="btn danger" id="end" disabled>End call</button>
+      </div>
+      <div class="transcript" id="transcript" role="log" aria-live="polite" aria-label="Live transcript">
+        <div class="empty" id="empty">Your live transcript will appear here once the call starts.</div>
+      </div>
+      <div class="controls">
+        <div class="chips" id="chips" role="group" aria-label="Quick replies">
+          <button class="chip" data-say="Where is my order?" disabled>📦 Order status</button>
+          <button class="chip" data-say="What are your opening hours?" disabled>🕘 Opening hours</button>
+          <button class="chip" data-say="What is your return policy?" disabled>↩️ Returns</button>
+          <button class="chip" data-say="How long does shipping take?" disabled>🚚 Shipping</button>
+          <button class="chip" data-say="I want to talk to a person" disabled>🙋 Talk to a person</button>
+        </div>
+        <div class="row">
+          <button class="btn mic" id="mic" aria-pressed="false" disabled>🎤 Tap to speak</button>
+          <form class="row" id="text-form" style="flex:1" autocomplete="off">
+            <label class="sr-only" for="text-input">Type your message</label>
+            <input type="text" id="text-input" placeholder="Or type your message…" disabled>
+            <button class="btn primary" id="send" type="submit" disabled>Send</button>
+          </form>
+        </div>
+        <div class="hint">Try: “Where is my order 1234?”, “What are your hours?”, “What's your return policy?”, “Can I talk to a person?”</div>
+      </div>
+    </section>
+
+    <section class="card summary" id="summary" hidden aria-label="Call summary">
+      <h2 id="summary-title">Call ended</h2>
+      <div id="summary-body"></div>
+      <div><button class="btn primary" id="new-call">Start a new call</button></div>
+    </section>
+  </main>
+
+  <script>document.getElementById("dash-link").href = "staff.html" + location.search;</script>
+  <script src="api.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
